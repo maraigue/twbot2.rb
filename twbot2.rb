@@ -1,6 +1,19 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
+# ------------------------------------------------------------
+# twbot2.rb - Twitter Bot Support Library in Ruby
+# version 0.21
+#
+# (C)2010- H.Hiro(Maraigue)
+# * mail: main@hhiro.net
+# * web: http://maraigue.hhiro.net/twbot/
+# * Twitter: http://twitter.com/h_hiro_
+#
+# This library is distributed under the (new) BSD license.
+# See the file LICENSE.txt .
+# ------------------------------------------------------------
+
 require 'rubygems'
 require 'devnull'
 require 'yaml'

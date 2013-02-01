@@ -1,10 +1,18 @@
-## About twbot2.rb
+# About twbot2.rb
 
 **twbot2.rb** is a Twitter bot framework combined with OAuth token manager.
 
 Since version 0.21, the program was remade to be used non-Twitter-bot Twitter program, where twbot2.rb works as only an OAuth token manager.
 
-## Example
+# Installation
+
+    gem install json    # needed in Ruby 1.8 or before
+    gem install oauth
+    gem install devnull
+
+Then, download twbot2.rb here and put it in the same directory as the bot program's location.
+
+# Example
 
 We have only to define what the bot tweets as the following format:
 

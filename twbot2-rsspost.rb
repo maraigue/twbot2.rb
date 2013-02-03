@@ -29,7 +29,7 @@ RSS_URL = "http://d.hatena.ne.jp/maraigue/rss"
 
 require "cgi"
 require "open-uri"
-require "./twbot3"
+require "./twbot2"
 
 SELFDIR = File.dirname(__FILE__)
 TwBot.create("#{SELFDIR}/config-rsspost.yml", "#{SELFDIR}/error-rsspost.log").cui_menu do

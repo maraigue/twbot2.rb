@@ -490,7 +490,7 @@ Input the screen name of your bot account.
   alias :follow :follow_by_screen_name
   
   def follow_by_user_id(target_user, auth = auth_http())
-    check_follow_result "Failed in following UserID:#{target_user}", auth.post("/1.1/friendships/create.json", :user_id => target_user)
+    check_follow_result "Failed in following UserID:#{target_user}", auth.post("/1.1/friendships/create.json", :user_id => target_user.to_s)
   end
   
   # unfollow a user
@@ -509,7 +509,7 @@ Input the screen name of your bot account.
   alias :unfollow :unfollow_by_screen_name
   
   def unfollow_by_user_id(target_user, auth = auth_http())
-    check_unfollow_result "Failed in unfollowing UserID:#{target_user}", auth.post("/1.1/friendships/destroy.json", :user_id => target_user)
+    check_unfollow_result "Failed in unfollowing UserID:#{target_user}", auth.post("/1.1/friendships/destroy.json", :user_id => target_user.to_s)
   end
     
   # get following status

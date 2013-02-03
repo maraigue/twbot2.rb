@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-require "./twbot3"
+require "./twbot2"
 
 # Example: show the name of the authenticated user
 # 

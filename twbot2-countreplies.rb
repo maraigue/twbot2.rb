@@ -17,7 +17,7 @@
 
 $: << File.dirname(__FILE__)
 
-require "twbot2"
+require "./twbot2"
 require "rubygems"
 require "json"
 

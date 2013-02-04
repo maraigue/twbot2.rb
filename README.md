@@ -87,3 +87,13 @@ Then try again "post" mode. A tweet will be appear in Twitter.
     [cui_menu:mode=post](A tweet has been posted)
 
 For more details, see the Wiki (https://github.com/maraigue/twbot2.rb/wiki).
+
+# Copyrights
+
+The original author, H.Hiro(Maraigue), distributes the library under "new BSD License". You may re-distribute a modified library as long as the original version's license text is included (details are shown in LICENSE.txt).
+
+# Contact
+
+Original author: H.Hiro(Maraigue) (e-mail: main at hhiro.net, website: http://hhiro.net/)
+
+To request new features and/or bug fixes, contact the e-mail address or send a pull request via GitHub (https://github.com/maraigue/twbot2.rb/).

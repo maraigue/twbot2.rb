@@ -1,4 +1,4 @@
-twbot2.rb Copyright (c) 2010-, Maraigue
+twbot2.rb Copyright (c) 2010-, H.Hiro(Maraigue)
 
 All rights reserved.
 

@@ -31,10 +31,15 @@ class TwBot
   # Consumer token of twbot2.rb
   # If you want to use this code for another application,
   # change the values of consumer key/secret to your application's ones.
-  Consumer = OAuth::Consumer.new(
-    "GcgsfkmFsT6THBOO9Qw", #consumer key
-    "wgBJ8OPgQqyc8T8SArYkavvCDoIW2jh2K12jl4Qf8", #consumer secret
-    :site => 'https://api.twitter.com')
+  
+  def self.set_consumer(key, secret, site = 'https://api.twitter.com')
+    @@consumer = OAuth::Consumer.new(key, secret, :site => site)
+  end
+  set_consumer("GcgsfkmFsT6THBOO9Qw", "wgBJ8OPgQqyc8T8SArYkavvCDoIW2jh2K12jl4Qf8")
+  
+  def self.consumer
+    @@consumer
+  end
   
   # ------------------------------------------------------------
   #   Instance methods
@@ -63,7 +68,7 @@ class TwBot
     @config = {} unless @config.kind_of?(Hash)
     
     @config_file = config_file
-    @log = (log_file ? open(log_file, "a") : DevNull.new)
+    @log_file = log_file
     @list = "data/#{list}"
     @keep_config_default = keep_config
     @keep_config = keep_config
@@ -274,9 +279,17 @@ Input the screen name of your bot account.
     # output log
     @logmsg = "[#{Time.now}]#{@last_run_mode ? '(mode='+@last_run_mode+')' : ''}#{@logmsg}"
     STDERR.puts @logmsg
-    @log.puts @logmsg
-    @logmsg = ""
-    #@log.close
+    
+    if @log_file
+      begin
+        open(@log_file, "a") do |f|
+          f.puts @logmsg
+          @logmsg = ""
+        end
+      rescue Exception => e
+        STDERR.puts e.twbot_errorlog_format
+      end
+    end
   end
   
   # update
@@ -450,7 +463,7 @@ Input the screen name of your bot account.
       access_token
     else
       # if token is stored, creates access token with it
-      OAuth::AccessToken.new(Consumer, @config[user_key]["token"], @config[user_key]["secret"])
+      OAuth::AccessToken.new(@@consumer, @config[user_key]["token"], @config[user_key]["secret"])
     end
   end
   
@@ -586,7 +599,7 @@ Input the screen name of your bot account.
   
   # Get OAuth token (via xAuth)
   def self.access_token_via_xauth(username, password)
-    Consumer.get_access_token(nil, {}, {
+    @@consumer.get_access_token(nil, {}, {
       :x_auth_mode => "client_auth",
       :x_auth_username => username,
       :x_auth_password => password})
@@ -596,7 +609,7 @@ Input the screen name of your bot account.
   def self.access_token_via_browser(username)
     # ref: http://d.hatena.ne.jp/shibason/20090802/1249204953
     
-    request_token = Consumer.get_request_token
+    request_token = @@consumer.get_request_token
     
     puts <<-OUT
 ============================================================

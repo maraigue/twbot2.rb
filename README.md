@@ -4,6 +4,10 @@
 
 Since version 0.21, the program was remade to be used non-Twitter-bot Twitter program, where twbot2.rb works as only an OAuth token manager.
 
+## 日本語での説明 (in Japanese)
+
+http://maraigue.hhiro.net/twbot/ または https://github.com/maraigue/twbot2.rb/wiki をご覧ください。
+
 # Installation
 
     gem install json    # needed in Ruby 1.8 or before

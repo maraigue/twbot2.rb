@@ -3,7 +3,7 @@
 
 # ------------------------------------------------------------
 # twbot2.rb - Twitter Bot Support Library in Ruby
-# version 0.21
+# version 0.22
 #
 # (C)2010- H.Hiro(Maraigue)
 # * mail: main@hhiro.net

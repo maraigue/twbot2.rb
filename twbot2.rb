@@ -14,12 +14,11 @@
 # See the file LICENSE.txt .
 # ------------------------------------------------------------
 
-require 'rubygems'
 require 'devnull'
 require 'yaml'
 require 'oauth'
 require 'json'
-YAML::ENGINE.yamler = 'syck'
+#YAML::ENGINE.yamler = 'syck'
 
 class Exception
   def twbot_errorlog_format
@@ -61,9 +60,13 @@ class TwBot
     end
     
     if File.exist?(config_file)
-      @config = YAML.load_file(config_file)
+      @config_file_obj = open(config_file, "r+b")
+      @config_file_obj.flock(File::LOCK_EX)
+      @config = YAML.load(@config_file_obj.read)
     else
       STDERR.puts "Warning: Configuration file \"#{config_file}\" not found: newly created."
+      @config_file_obj = open(config_file, "a+b")
+      @config_file_obj.flock(File::LOCK_EX)
     end
     @config = {} unless @config.kind_of?(Hash)
     
@@ -92,10 +95,12 @@ Usage: #{$0} [modes...]
 - refresh[=USER]: Same as "add[=USER]", but always tries authentication
                   even if the USER is in the configuration file.
 - default[=USER]: Set the default authenticated user as USER.
-- run:            Runs specified code.
-- load:           Runs specified code as a Twitter bot definition; the
+- run[=OPTSTR]:   Runs specified code.
+                  OPTSTR is given as the variable @optstr in the code.
+- load[=OPTSTR]:  Runs specified code as a Twitter bot definition; the
                   returned values (must be an array) are stored as
                   tweets into the configuration file.
+                  OPTSTR is given as the variable @optstr in the code.
 - post[=COUNT]:   Posts tweets stored by "load" mode.
 
 Example:
@@ -134,9 +139,11 @@ Example:
         add_user($1, true)
       when /\Adefault(?:=([0-9A-Z_a-z]+))?\z/
         default_user($1)
-      when "run"
+      when /\Arun(?:\=(.*?))?\z/
+        @optstr = $1
         run(&block)
-      when "load"
+      when /\Aload(?:\=(.*?))?\z/
+        @optstr = $1
         load_tweet(&block)
       when /\Apost(?:=(\d+)(?:,(\d+))?)?\z/
         # post messages from the list
@@ -272,7 +279,8 @@ Input the screen name of your bot account.
   def save_config
     unless @keep_config
       new_yaml = YAML.dump(@config)
-      open(@config_file, "w"){ |f| f.print new_yaml }
+      @config_file_obj.rewind
+      @config_file_obj.print new_yaml
     end
     @keep_config = @keep_config_default
     
@@ -336,6 +344,7 @@ Input the screen name of your bot account.
         @logmsg << "(skipped: An empty string specified)"
         return false
       end
+      request[:status].force_encoding("utf-8")
       
       # send request
       if @test

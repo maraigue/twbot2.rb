@@ -3,7 +3,7 @@
 
 # ------------------------------------------------------------
 # twbot2.rb - Twitter Bot Support Library in Ruby
-# version 0.22
+# version 0.23
 #
 # (C)2010- H.Hiro(Maraigue)
 # * mail: main@hhiro.net
@@ -32,9 +32,27 @@ class TwBot
   # change the values of consumer key/secret to your application's ones.
   
   def self.set_consumer(key, secret, site = 'https://api.twitter.com')
+    if key.to_s.empty? || secret.to_s.empty?
+      STDERR.puts <<ERROR
+============================================================
+*** ERROR in application key/secret ***
+
+What you have to do:
+1. Issue application key/secret in Twitter site.
+   https://apps.twitter.com/
+2. At the following part in twbot2.rb file:
+   set_consumer("", "")
+   specify the application key/secret here.
+For just trial, use the sample code in twbot2.rb file.
+============================================================
+ERROR
+      raise ArgumentError, "Invalid application key/secret"
+    end
     @@consumer = OAuth::Consumer.new(key, secret, :site => site)
   end
-  set_consumer("GcgsfkmFsT6THBOO9Qw", "wgBJ8OPgQqyc8T8SArYkavvCDoIW2jh2K12jl4Qf8")
+  set_consumer("", "")
+  # For just trial, use
+  #set_consumer("GcgsfkmFsT6THBOO9Qw", "wgBJ8OPgQqyc8T8SArYkavvCDoIW2jh2K12jl4Qf8")
   
   def self.consumer
     @@consumer

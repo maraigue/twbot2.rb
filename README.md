@@ -16,6 +16,17 @@ http://maraigue.hhiro.net/twbot/ または https://github.com/maraigue/twbot2.rb
 
 Then, download twbot2.rb here and put it in the same directory as the bot program's location.
 
+## Needed with version 0.23 or later
+
+Until version 0.22, the application key/secret (application-specific strings needed for accessing Twitter API) for twbot2.rb is sepcified by default.  
+Since version 0.23, it is not specified by default since Twitter will introduce the limitation of tweets per application (in addition to the existing limitation of tweets per account) on September 10th, 2018.  
+[New developer requirements to protect our platform (Developer Blog, Twitter)](https://blog.twitter.com/developer/en_us/topics/tools/2018/new-developer-requirements-to-protect-our-platform.html)
+
+1.  [Register an application for Twitter](https://apps.twitter.com/). Then retrieve the pair of "Consumer Key" and "Consumer Secret".  
+2.  Open twbot2.rb, find the code `set_consumer("", "")`, and then input the key and the secret here.
+
+For just trial, instead of registering the application, use the code described in the comment.
+
 # Example
 
 We have only to define what the bot tweets as the following format:
@@ -26,7 +37,10 @@ We have only to define what the bot tweets as the following format:
     TwBot.create("config-file.yml", "log-file.log").cui_menu do
       # Define what the bot tweets here
       tweet_list = ["Good morning", "Good afternoon", "Good evening"]
-      [tweet_list[rand(tweet_list.size)]] # return as an array
+      
+      # Since it has to return tweets as an array,
+      # To tweet only once, it should return a single-element array
+      [tweet_list[rand(tweet_list.size)]] 
     end
 
 To add the content to be tweeted to the configuration file, call with the parameter "load".

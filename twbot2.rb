@@ -235,6 +235,7 @@ Example:
   def add_user(username, reload = false, update_default = false)
     until username
       print "User name >"
+      STDOUT.flush
       username = STDIN.gets.chomp
       return if username.empty?
       redo unless username =~ /\A[0-9A-Z_a-z]+\z/
@@ -658,6 +659,7 @@ To retrieve OAuth token of user "#{username}":
     pin_number = nil
     begin
       print "PIN number >"
+      STDOUT.flush
       pin_number = STDIN.gets.chomp
     end until pin_number && pin_number =~ /\A\d*\z/
     

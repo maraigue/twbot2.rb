@@ -641,11 +641,15 @@ Input the screen name of your bot account.
     puts <<-OUT
 ============================================================
 To retrieve OAuth token of user "#{username}":
-(1) Log in Twitter with a browser for user "#{username}".
-(2) Access the URL below with same browser:
+(1) Log in Twitter with a browser as user "#{username}".
+(2) Access the URL below with the browser:
     #{request_token.authorize_url}
-(3) Check the application name is "twbot2.rb" and
-    click "Allow" link in the browser.
+(3) Check that the application name displayed in the page is
+    the same as the one specified in this twbot2.rb file.
+    If so, click "Allow" link in the browser.
+    (Information of the application in this twbot2.rb file:
+     KEY=#{@@consumer.key}
+     SECRET=#{@@consumer.secret})
 (4) Input the shown number (PIN number).
     To cancel, input nothing and press enter key.
 ============================================================
@@ -653,7 +657,7 @@ To retrieve OAuth token of user "#{username}":
     
     pin_number = nil
     begin
-      print "PIN number > "
+      print "PIN number >"
       pin_number = STDIN.gets.chomp
     end until pin_number && pin_number =~ /\A\d*\z/
     

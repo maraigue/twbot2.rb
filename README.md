@@ -1,3 +1,8 @@
+# NOTICE (2024-06-08)
+
+**twbot2.rb is now unavailable due to changes in API uses in Twitter (X).**  
+**Please use [twbot3.rb](https://github.com/maraigue/twbot3.rb) for new bot creations.**
+
 # About twbot2.rb
 
 **twbot2.rb** is a Twitter bot framework combined with OAuth token manager.
